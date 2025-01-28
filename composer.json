@@ -1,0 +1,20 @@
+{
+    "name": "hexlet/code",
+    "bin": [
+        "bin/gendiff"
+    ],
+    "description": "diff generator",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mike Kolotovich"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
