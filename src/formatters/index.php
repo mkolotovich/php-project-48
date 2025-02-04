@@ -4,7 +4,8 @@ namespace Gendiff\Formatters\Index;
 
 use function Gendiff\Formatters\Stylish\stylish;
 
-function formatData($formatName, $structure) {
+function formatData($formatName, $structure)
+{
     if ($formatName === 'plain') {
         return plain($structure);
     }

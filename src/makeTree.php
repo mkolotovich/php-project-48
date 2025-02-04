@@ -2,7 +2,8 @@
 
 namespace Gendiff\MakeTree;
 
-function isValueObject($node, $file1, $file2) {
+function isValueObject($node, $file1, $file2)
+{
     if (array_key_exists($node, $file1) && array_key_exists($node, $file2)) {
         if (gettype($file1[$node]) === 'array' && gettype($file2[$node]) === 'array') {
             return true;
@@ -11,7 +12,8 @@ function isValueObject($node, $file1, $file2) {
     return false;
 }
 
-function makeNode($key, $type, $children, ...$args) {
+function makeNode($key, $type, $children, ...$args)
+{
     $node = ["key" => $key, "type" => $type, "children" => $children];
     if (count($args) === 1) {
         [$node['value']] = $args;
@@ -33,7 +35,8 @@ function makeNode($key, $type, $children, ...$args) {
     return $node;
 }
 
-function buildNode($el, $parsedData1, $parsedData2) {
+function buildNode($el, $parsedData1, $parsedData2)
+{
     if (isValueObject($el, $parsedData1, $parsedData2)) {
         $subKeys1 = $parsedData1[$el];
         $subKeys2 = $parsedData2[$el];
@@ -41,8 +44,7 @@ function buildNode($el, $parsedData1, $parsedData2) {
         $keys2 = array_keys($subKeys2);
         $innerKeys = array_merge($keys1, $keys2);
         $sortedKeys = sort($innerKeys);
-        return makeNode($el, 'nested', makeTree($sortedKeys,
-                                                 $subKeys1, $subKeys2), []);
+        return makeNode($el, 'nested', makeTree($sortedKeys, $subKeys1, $subKeys2), []);
     }
     if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
         if ($parsedData1[$el] === $parsedData2[$el]) {
@@ -51,8 +53,7 @@ function buildNode($el, $parsedData1, $parsedData2) {
     }
     if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
         if ($parsedData1[$el] !== $parsedData2[$el]) {
-            return makeNode($el, 'updated', [], $parsedData1[$el],
-            $parsedData2[$el]);
+            return makeNode($el, 'updated', [], $parsedData1[$el], $parsedData2[$el]);
         }
     }
     if (array_key_exists($el, $parsedData1)) {
@@ -61,11 +62,13 @@ function buildNode($el, $parsedData1, $parsedData2) {
     return makeNode($el, 'added', [], $value=$parsedData2[$el]);
 }
 
-function makeTree($keys, $parsedData1, $parsedData2) {
+function makeTree($keys, $parsedData1, $parsedData2)
+{
     return array_map(fn($item) => buildNode($item, $parsedData1, $parsedData2), $keys);
 }
 
-function buildTree($parsedData1, $parsedData2) {
+function buildTree($parsedData1, $parsedData2)
+{
     $keys1 = array_keys($parsedData1);
     $keys2 = array_keys($parsedData2);
     $keys = array_merge($keys1, $keys2);
