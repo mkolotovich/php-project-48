@@ -12,7 +12,7 @@ function getData($filePath)
     $data = readFile($filePath);
     return parse($data);
 }
-    
+
 function generateDiff($filePath1, $filePath2, $formatName = 'stylish')
 {
     $parsedData1 = getData($filePath1);

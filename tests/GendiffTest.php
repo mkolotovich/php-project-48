@@ -3,6 +3,7 @@
 namespace Hexlet\Phpunit\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Gendiff\Gendiff\generateDiff;
 use function Gendiff\ReadFile\getFixturePath;
 

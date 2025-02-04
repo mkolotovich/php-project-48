@@ -59,7 +59,7 @@ function buildNode($el, $parsedData1, $parsedData2)
     if (array_key_exists($el, $parsedData1)) {
         return makeNode($el, 'removed', [], $parsedData1[$el]);
     }
-    return makeNode($el, 'added', [], $value=$parsedData2[$el]);
+    return makeNode($el, 'added', [], $value = $parsedData2[$el]);
 }
 
 function makeTree($keys, $parsedData1, $parsedData2)

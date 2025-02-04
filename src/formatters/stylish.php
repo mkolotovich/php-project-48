@@ -26,7 +26,7 @@ function stringify($value, $replacer = ' ', $spaceCount = 1)
     function cb($currentValue, $replaceInner, $depth)
     {
         $entries = $currentValue;
-        return array_reduce($entries, $inner($replaceInner=$replaceInner, $cb=$cb, $depth=$depth, "{\n"));
+        return array_reduce($entries, $inner($replaceInner = $replaceInner, $cb = $cb, $depth = $depth, "{\n"));
     }
     $res = "{$cb($value, $replacer, $spaceCount)}";
     $res += "' ' * {($spaceCount - $DEPTHSTPACE)}}}";
@@ -71,13 +71,13 @@ function stylish($tree)
                 return $res;
             case 'updated':
                 $res = "{$result}";
-                $res .= str_repeat(' ', \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE)."- {$key}";
+                $res .= str_repeat(' ', \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE) . "- {$key}";
                 $res .= ": {$printVal}\n";
-                $res .= str_repeat(' ', \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE)."+ {$key}";
+                $res .= str_repeat(' ', \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE) . "+ {$key}";
                 $res .= ": {$printNewVal}";
                 return $res;
             case 'added':
-                $res = "{$result}".str_repeat(' ', (\Gendiff\Formatters\Stylish\DEPTHSTPACE* ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE));
+                $res = "{$result}" . str_repeat(' ', (\Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE));
                 $res .= "+ {$key}: {$printVal}";
                 return $res;
             case 'removed':
