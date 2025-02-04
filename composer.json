@@ -9,7 +9,12 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "src/parser.php"
+            "src/gendiff.php",
+            "src/readFile.php",
+            "src/parser.php",
+            "src/makeTree.php",
+            "src/formatters/index.php",
+            "src/formatters/stylish.php"
         ]
     },
     "authors": [

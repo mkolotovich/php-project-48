@@ -2,9 +2,8 @@
 
 namespace Gendiff\Parser;
 
-function parse($file) {
-    $content = file_get_contents($file);
-    if ($content !== false) {
-        return(json_decode($content));
+function parse($data) {
+    if ($data !== false) {
+        return(json_decode($data, true));
     }
 }
