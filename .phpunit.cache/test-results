@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Hexlet\\Phpunit\\Tests\\GendiffYamlTest::testGendiffYaml":8},"times":{"Hexlet\\Phpunit\\Tests\\GendiffTest::testGendiffJson":0.031,"Hexlet\\Phpunit\\Tests\\GendiffYamlTest::testGendiffYaml":0.018,"Hexlet\\Phpunit\\Tests\\GendiffTest::testGendiffYaml":0.019}}

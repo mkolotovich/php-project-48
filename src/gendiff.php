@@ -3,14 +3,15 @@
 namespace Gendiff\Gendiff;
 
 use function Gendiff\ReadFile\readFile;
-use function Gendiff\Parser\parse;
+use function Gendiff\Parsers\parse;
 use function Gendiff\MakeTree\buildTree;
 use function Gendiff\Formatters\Index\formatData;
 
 function getData($filePath)
 {
     $data = readFile($filePath);
-    return parse($data);
+    $format = new \SplFileInfo($filePath);
+    return parse($data, $format->getExtension());
 }
 
 function generateDiff($filePath1, $filePath2, $formatName = 'stylish')

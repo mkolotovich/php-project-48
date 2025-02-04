@@ -5,3 +5,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dde09a7d52b5a358a21b/test_coverage)](https://codeclimate.com/github/mkolotovich/php-project-48/test_coverage)
 
 [![asciicast](https://asciinema.org/a/e0KNn5H2FhBw1eytvzERYTIv6.svg)](https://asciinema.org/a/e0KNn5H2FhBw1eytvzERYTIv6)
+[![asciicast](https://asciinema.org/a/c1JWMBXHjJw81eSUeJsDsaUaT.svg)](https://asciinema.org/a/c1JWMBXHjJw81eSUeJsDsaUaT)

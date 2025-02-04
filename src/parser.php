@@ -1,10 +1,17 @@
 <?php
 
-namespace Gendiff\Parser;
+namespace Gendiff\Parsers;
 
-function parse($data)
+use Symfony\Component\Yaml\Yaml;
+
+function parse($data, $format)
 {
-    if ($data !== false) {
-        return(json_decode($data, true));
+    switch ($format) {
+        case 'json':
+            return(json_decode($data, true));
+        case 'yaml':
+            return(Yaml::parse($data));
+        case 'yml':
+            return(Yaml::parse($data));
     }
 }
