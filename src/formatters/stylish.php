@@ -110,6 +110,5 @@ function stylish($tree)
             }
         }
     }
-   
     return cb($tree);
 }
