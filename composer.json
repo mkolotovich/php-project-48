@@ -13,8 +13,9 @@
             "src/readFile.php",
             "src/parser.php",
             "src/makeTree.php",
-            "src/formatters/index.php",
-            "src/formatters/stylish.php"
+            "src/Formatters.php",
+            "src/Formatters/stylish.php",
+            "src/Formatters/plain.php"
         ]
     },
     "authors": [

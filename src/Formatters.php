@@ -3,6 +3,7 @@
 namespace Gendiff\Formatters\Index;
 
 use function Gendiff\Formatters\Stylish\stylish;
+use function Gendiff\Formatters\Plain\plain;
 
 function formatData($formatName, $structure)
 {

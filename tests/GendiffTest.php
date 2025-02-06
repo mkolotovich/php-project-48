@@ -13,7 +13,7 @@ class GendiffTest extends TestCase
 
     public function setUp(): void
     {
-        $this->coll = file_get_contents(getFixturePath('expected_plain_file.txt'));
+        $this->coll = file_get_contents(getFixturePath('expected_nested_file.txt'));
     }
     public function testGendiffJson(): void
     {
@@ -26,5 +26,11 @@ class GendiffTest extends TestCase
         $file1 = getFixturePath('file1.yaml');
         $file2 = getFixturePath('file2.yml');
         $this->assertEquals($this->coll, generateDiff($file1, $file2));
+    }
+    public function testGendiffPlain(): void
+    {
+        $file1 = getFixturePath('file1.yaml');
+        $file2 = getFixturePath('file2.yml');
+        $this->assertEquals(file_get_contents(getFixturePath('expected_plain_file.txt')), generateDiff($file1, $file2, 'plain'));
     }
 }
