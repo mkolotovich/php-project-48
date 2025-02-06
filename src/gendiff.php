@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Gendiff;
+namespace Differ\Differ;
 
 use function Gendiff\ReadFile\readFile;
 use function Gendiff\Parsers\parse;
@@ -14,7 +14,7 @@ function getData($filePath)
     return parse($data, $format->getExtension());
 }
 
-function generateDiff($filePath1, $filePath2, $formatName = 'stylish')
+function genDiff($filePath1, $filePath2, $formatName = 'stylish')
 {
     $parsedData1 = getData($filePath1);
     $parsedData2 = getData($filePath2);

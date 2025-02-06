@@ -28,6 +28,6 @@ DOC;
 
 $args = Docopt::handle($doc, array('version'=>'Generate diff 0.1.0'));
 
-use function Gendiff\Gendiff\generateDiff;
+use function Differ\Differ\genDiff;
 
-echo generateDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']) . "\n";
+echo genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']) . "\n";
