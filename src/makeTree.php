@@ -26,12 +26,12 @@ function makeNode($key, $type, $children, ...$args)
     if (array_key_exists('value', $node) && $node['value'] === true) {
         $node['value'] = 'true';
     }
-    // if (array_key_exists('new_value', $node) && $node['new_value'] === null) {
-    //     $node['new_value'] = 'null';
-    // }
-    // if (array_key_exists('value', $node) && node['value'] === null) {
-    //     $node['value'] = 'null';
-    // }
+    if (array_key_exists('newValue', $node) && $node['newValue'] === null) {
+        $node['newValue'] = 'null';
+    }
+    if (array_key_exists('value', $node) && $node['value'] === null) {
+        $node['value'] = 'null';
+    }
     return $node;
 }
 
@@ -43,8 +43,9 @@ function buildNode($el, $parsedData1, $parsedData2)
         $keys1 = array_keys($subKeys1);
         $keys2 = array_keys($subKeys2);
         $innerKeys = array_merge($keys1, $keys2);
-        $sortedKeys = sort($innerKeys);
-        return makeNode($el, 'nested', makeTree($sortedKeys, $subKeys1, $subKeys2), []);
+        $uniqueKeys = array_unique($innerKeys);
+        sort($uniqueKeys);
+        return makeNode($el, 'nested', makeTree($uniqueKeys, $subKeys1, $subKeys2));
     }
     if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
         if ($parsedData1[$el] === $parsedData2[$el]) {
