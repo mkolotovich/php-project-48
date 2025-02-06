@@ -4,6 +4,7 @@ namespace Gendiff\Formatters\Index;
 
 use function Gendiff\Formatters\Stylish\stylish;
 use function Gendiff\Formatters\Plain\plain;
+use function Gendiff\Formatters\Json\jsonFormatter;
 
 function formatData($formatName, $structure)
 {
@@ -11,7 +12,7 @@ function formatData($formatName, $structure)
         return plain($structure);
     }
     if ($formatName === 'json') {
-        return json_formatter($structure);
+        return jsonFormatter($structure);
     }
     if ($formatName == 'stylish') {
         return stylish($structure);
