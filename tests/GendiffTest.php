@@ -31,6 +31,7 @@ class GendiffTest extends TestCase
     {
         $file1 = getFixturePath('file1.yaml');
         $file2 = getFixturePath('file2.yml');
-        $this->assertEquals(file_get_contents(getFixturePath('expected_plain_file.txt')), generateDiff($file1, $file2, 'plain'));
+        $this->coll = file_get_contents(getFixturePath('expected_plain_file.txt'));
+        $this->assertEquals($this->coll, generateDiff($file1, $file2, 'plain'));
     }
 }
