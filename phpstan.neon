@@ -3,8 +3,6 @@ parameters:
   paths:
     - src
 
-  
-
   excludePaths:
     - vendor
     - tests
@@ -17,4 +15,3 @@ parameters:
    - '#has no return type specified#'
    - '#should return .* but returns#'
    - '#Anonymous function should have native return type#'
-

@@ -15,7 +15,6 @@ function printValue(mixed $value)
     }
     return $value;
 }
-
 /**
  * @param array<mixed> $node
  */
@@ -36,24 +35,18 @@ function cb(array $node, string $result = '', string $path = '')
             $filtered = array_filter($res, fn($item) => $item !== '');
             return implode("\n", $filtered);
         case 'added':
-            $res = "{$result}Property '{$nodeName}' was added with value: ";
-            $res .= "{$printedValue}";
-            return $res;
+            return "{$result}Property '{$nodeName}' was added with value: {$printedValue}";
         case 'removed':
             return "{$result}Property '{$nodeName}' was removed";
         case 'updated':
-            $res = "{$result}Property '{$nodeName}' was updated. From ";
-            $res .= "{$printedValue} to {$printedNewValue}";
-            return $res;
+            return "{$result}Property '{$nodeName}' was updated. From {$printedValue} to {$printedNewValue}";
         case 'unchanged':
             return '';
     }
 }
-
 /**
  * @param array<mixed> $tree
  */
-
 function plain(array $tree)
 {
     return cb($tree);

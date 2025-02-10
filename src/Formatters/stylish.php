@@ -16,9 +16,7 @@ function callBack(array $currentValue, string $replaceInner, int $depth)
         if (gettype($val) !== 'array') {
             $newAcc = str_repeat($replaceInner, $depth) . "{$key}: {$val}\n";
         } else {
-            $newAcc = str_repeat($replaceInner, $depth) . "{$key}: ";
-            $newAcc .= callBack($val, $replaceInner, $depth + \Gendiff\Formatters\Stylish\DEPTHSTPACE);
-            $newAcc .= str_repeat($replaceInner, $depth) . "}\n";
+            $newAcc = str_repeat($replaceInner, $depth) . "{$key}: " . callBack($val, $replaceInner, $depth + \Gendiff\Formatters\Stylish\DEPTHSTPACE) . str_repeat($replaceInner, $depth) . "}\n";
         }
         return $acc . $newAcc;
     }, "{\n");
@@ -29,8 +27,7 @@ function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1)
     if (gettype($value) !== 'array') {
         return "{$value}";
     }
-    $res = callBack($value, $replacer, $spaceCount);
-    $res .= str_repeat(' ', $spaceCount - \Gendiff\Formatters\Stylish\DEPTHSTPACE) . "}";
+    $res = callBack($value, $replacer, $spaceCount) . str_repeat(' ', $spaceCount - \Gendiff\Formatters\Stylish\DEPTHSTPACE) . "}";
     return $res;
 }
 /**
@@ -42,8 +39,7 @@ function mkStr(array $item, int $depth)
         $result = str_repeat(
             ' ',
             \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
-        );
-        $result .= "  {$item["key"]}: {\n";
+        ) . "  {$item["key"]}: {\n";
         return $result;
     }
     return '';
@@ -62,53 +58,44 @@ function cb(array $data, string $result = '', int $depth = 0)
     switch ($type) {
         case 'root':
             $child = array_map(fn($item) => cb($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $res = "{\n{$result}" . implode("\n", $child) . "\n" ;
-            $res .= str_repeat(
+            $res = "{\n{$result}" . implode("\n", $child) . "\n" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\SPACE * $depth * \Gendiff\Formatters\Stylish\SPACE
             ) . "}";
             return $res;
         case 'nested':
             $child = array_map(fn($item) => cb($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $res = "{$result}" . implode("\n", $child) . "\n";
-            $res .= str_repeat(
+            $res = "{$result}" . implode("\n", $child) . "\n" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\SPACE * $depth * \Gendiff\Formatters\Stylish\SPACE
             ) . "}";
             return $res;
         case 'updated':
-            $res = "{$result}";
-            $res .= str_repeat(
+            $res = "{$result}" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
-            ) . "- {$key}";
-            $res .= ": {$printVal}\n";
-            $res .= str_repeat(
+            ) . "- {$key}" . ": {$printVal}\n" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
-            ) . "+ {$key}";
-            $res .= ": {$printNewVal}";
+            ) . "+ {$key}" . ": {$printNewVal}";
             return $res;
         case 'added':
             $res = "{$result}" . str_repeat(
                 ' ',
                 (\Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE)
-            );
-            $res .= "+ {$key}: {$printVal}";
+            ) . "+ {$key}: {$printVal}";
             return $res;
         case 'removed':
             $res = "{$result}" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
-            );
-            $res .= "- {$key}: {$printVal}";
+            ) . "- {$key}: {$printVal}";
             return $res;
         case 'unchanged':
             $res = "{$result}" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
-            );
-            $res .= "  {$key}: {$printVal}";
+            ) . "  {$key}: {$printVal}";
             return $res;
     }
 }
