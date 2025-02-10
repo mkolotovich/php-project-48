@@ -2,7 +2,11 @@
 
 namespace Gendiff\Formatters\Json;
 
-function jsonFormatter($data)
+/**
+ * @param array<mixed> $data
+ */
+
+function jsonFormatter(array $data)
 {
     return json_encode($data, JSON_PRETTY_PRINT);
 }

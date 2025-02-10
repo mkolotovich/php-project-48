@@ -6,7 +6,11 @@ use function Gendiff\Formatters\Stylish\stylish;
 use function Gendiff\Formatters\Plain\plain;
 use function Gendiff\Formatters\Json\jsonFormatter;
 
-function formatData($formatName, $structure)
+/**
+ * @param array<mixed> $structure
+ */
+
+function formatData(string $formatName, array $structure)
 {
     if ($formatName === 'plain') {
         return plain($structure);

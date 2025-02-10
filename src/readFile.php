@@ -2,7 +2,7 @@
 
 namespace Gendiff\ReadFile;
 
-function getFixturePath($fileName)
+function getFixturePath(string $fileName)
 {
     $currentDir = explode('/', __DIR__);
     unset($currentDir[count($currentDir) - 1]);
@@ -15,7 +15,7 @@ function getFixturePath($fileName)
     return realpath($fileName);
 }
 
-function readFile($fileName)
+function readFile(string $fileName)
 {
     $fullPath = getFixturePath($fileName);
     $data = file_get_contents($fullPath);

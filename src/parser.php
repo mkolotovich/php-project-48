@@ -4,7 +4,7 @@ namespace Gendiff\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parse($data, $format)
+function parse(string $data, string $format)
 {
     switch ($format) {
         case 'json':
