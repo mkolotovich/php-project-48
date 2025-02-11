@@ -5,17 +5,14 @@
     ],
     "description": "diff generator",
     "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        },
         "files": [
-            "src/gendiff.php",
-            "src/readFile.php",
-            "src/parser.php",
-            "src/makeTree.php",
+            "src/Differ.php",
+            "src/ReadFile.php",
+            "src/Parsers.php",
+            "src/MakeTree.php",
             "src/Formatters.php",
-            "src/Formatters/stylish.php",
-            "src/Formatters/plain.php",
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php",
             "src/Formatters/json.php"
         ]
     },

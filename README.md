@@ -15,11 +15,12 @@
 
 ## Установка и запуск приложения 
 1. Убедитесь, что у вас установлен PHP версии 8.1 или выше. В противном случае установите PHP версии 8.1 или выше.
-2. Установите пакет в систему с помощью make install и убедитесь в том, что он работает, запустив ./bin/gendiff -h в терминале. Команду make install необходимо запускать из корневой директории проекта.
-3. Пример использования:
-    * формат plain - $ ./bin/gendiff --format plain path/to/file.yml another/path/file.json
-    * формат stylish - $ ./bin/gendiff filepath1.json filepath2.json
-
+2. Установите пакет в систему с помощью make install и убедитесь в том, что он работает, запустив `./bin/gendiff -h` в терминале. Команду `make install` необходимо запускать из корневой директории проекта.
+3. Примеры использования:
+```bash
+    ./bin/gendiff --format plain path/to/file.yml another/path/file.json
+    ./bin/gendiff filepath1.json filepath2.json
+```
 [![asciicast](https://asciinema.org/a/e0KNn5H2FhBw1eytvzERYTIv6.svg)](https://asciinema.org/a/e0KNn5H2FhBw1eytvzERYTIv6)
 [![asciicast](https://asciinema.org/a/c1JWMBXHjJw81eSUeJsDsaUaT.svg)](https://asciinema.org/a/c1JWMBXHjJw81eSUeJsDsaUaT)
 [![asciicast](https://asciinema.org/a/B8FyWTxxt6hVCBpHONg8tDmvz.svg)](https://asciinema.org/a/B8FyWTxxt6hVCBpHONg8tDmvz)
