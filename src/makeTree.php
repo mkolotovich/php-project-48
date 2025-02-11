@@ -60,10 +60,7 @@ function buildNode(string $el, array $parsedData1, array $parsedData2)
         $keys2 = array_keys($subKeys2);
         $innerKeys = array_merge($keys1, $keys2);
         $uniqueKeys = array_unique($innerKeys);
-        $sortedKeys = $uniqueKeys;
-        usort($sortedKeys, function ($a, $b) {
-            return $a <=> $b;
-        });
+        $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
         return makeNode($el, 'nested', makeTree($sortedKeys, $subKeys1, $subKeys2));
     }
     if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
@@ -100,10 +97,7 @@ function buildTree(array $parsedData1, array $parsedData2)
     $keys2 = array_keys($parsedData2);
     $keys = array_merge($keys1, $keys2);
     $uniqueKeys = array_unique($keys);
-    $sortedKeys = $uniqueKeys;
-    usort($sortedKeys, function ($a, $b) {
-        return strcmp($a, $b);
-    });
+    $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
     $res = makeTree($sortedKeys, $parsedData1, $parsedData2);
     $tree = makeNode('', 'root', $res);
     return $tree;

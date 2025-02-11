@@ -16,7 +16,9 @@ function callBack(array $currentValue, string $replaceInner, int $depth)
         if (gettype($val) !== 'array') {
             $newAcc = str_repeat($replaceInner, $depth) . "{$key}: {$val}\n";
         } else {
-            $newAcc = str_repeat($replaceInner, $depth) . "{$key}: " . callBack($val, $replaceInner, $depth + \Gendiff\Formatters\Stylish\DEPTHSTPACE) . str_repeat($replaceInner, $depth) . "}\n";
+            $newAcc = str_repeat($replaceInner, $depth) . "{$key}: "
+            . callBack($val, $replaceInner, $depth + \Gendiff\Formatters\Stylish\DEPTHSTPACE)
+            . str_repeat($replaceInner, $depth) . "}\n";
         }
         return $acc . $newAcc;
     }, "{\n");
@@ -27,7 +29,8 @@ function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1)
     if (gettype($value) !== 'array') {
         return "{$value}";
     }
-    $res = callBack($value, $replacer, $spaceCount) . str_repeat(' ', $spaceCount - \Gendiff\Formatters\Stylish\DEPTHSTPACE) . "}";
+    $res = callBack($value, $replacer, $spaceCount)
+    . str_repeat(' ', $spaceCount - \Gendiff\Formatters\Stylish\DEPTHSTPACE) . "}";
     return $res;
 }
 /**
@@ -54,7 +57,8 @@ function cb(array $data, string $result = '', int $depth = 0)
     $children = $data['children'];
     $printVal = array_key_exists("value", $data) ?
         stringify($data['value'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
-    $printNewVal = array_key_exists("newValue", $data) ? stringify($data['newValue'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
+    $printNewVal = array_key_exists("newValue", $data) ?
+        stringify($data['newValue'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
             $child = array_map(fn($item) => cb($item, mkStr($item, $depth + 1), $depth + 1), $children);
