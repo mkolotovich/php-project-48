@@ -10,7 +10,7 @@ use function Gendiff\Formatters\Json\jsonFormatter;
  * @param array<mixed> $structure
  */
 
-function formatData(string $formatName, array $structure)
+function formatData(string $formatName, array $structure): mixed
 {
     if ($formatName === 'plain') {
         return plain($structure);

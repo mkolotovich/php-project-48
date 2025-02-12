@@ -6,7 +6,7 @@ namespace Gendiff\Formatters\Json;
  * @param array<mixed> $data
  */
 
-function jsonFormatter(array $data)
+function jsonFormatter(array $data): string
 {
     return json_encode($data, JSON_PRETTY_PRINT);
 }

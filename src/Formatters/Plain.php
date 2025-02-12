@@ -2,7 +2,7 @@
 
 namespace Gendiff\Formatters\Plain;
 
-function printValue(mixed $value)
+function printValue(mixed $value): mixed
 {
     if (gettype($value) === 'array') {
         return '[complex value]';
@@ -18,7 +18,7 @@ function printValue(mixed $value)
 /**
  * @param array<mixed> $node
  */
-function cb(array $node, string $result = '', string $path = '')
+function cb(array $node, string $result = '', string $path = ''): string
 {
     $key = $node['key'];
     $type = $node['type'];
@@ -40,14 +40,14 @@ function cb(array $node, string $result = '', string $path = '')
             return "{$result}Property '{$nodeName}' was removed";
         case 'updated':
             return "{$result}Property '{$nodeName}' was updated. From {$printedValue} to {$printedNewValue}";
-        case 'unchanged':
+        default:
             return '';
     }
 }
 /**
  * @param array<mixed> $tree
  */
-function plain(array $tree)
+function plain(array $tree): string
 {
     return cb($tree);
 }

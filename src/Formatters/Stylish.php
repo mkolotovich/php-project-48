@@ -8,7 +8,7 @@ const DEPTHSTPACE = 4;
 /**
  * @param array<mixed> $currentValue
  */
-function callBack(array $currentValue, string $replaceInner, int $depth)
+function callBack(array $currentValue, string $replaceInner, int $depth): string
 {
     $entries = array_keys($currentValue);
     return array_reduce($entries, function ($acc, $key) use ($replaceInner, $depth, $currentValue) {
@@ -24,7 +24,7 @@ function callBack(array $currentValue, string $replaceInner, int $depth)
     }, "{\n");
 }
 
-function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1)
+function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1): mixed
 {
     if (gettype($value) !== 'array') {
         return "{$value}";
@@ -36,7 +36,7 @@ function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1)
 /**
  * @param array<mixed> $item
  */
-function mkStr(array $item, int $depth)
+function mkStr(array $item, int $depth): string
 {
     if ($item["type"] == 'nested') {
         $result = str_repeat(
@@ -50,7 +50,7 @@ function mkStr(array $item, int $depth)
 /**
  * @param array<mixed> $data
  */
-function cb(array $data, string $result = '', int $depth = 0)
+function cb(array $data, string $result = '', int $depth = 0): string
 {
     $key = $data['key'];
     $type = $data['type'];
@@ -95,7 +95,7 @@ function cb(array $data, string $result = '', int $depth = 0)
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
             ) . "- {$key}: {$printVal}";
             return $res;
-        case 'unchanged':
+        default:
             $res = "{$result}" . str_repeat(
                 ' ',
                 \Gendiff\Formatters\Stylish\DEPTHSTPACE * ($depth - 1) + \Gendiff\Formatters\Stylish\SPACE
@@ -106,7 +106,7 @@ function cb(array $data, string $result = '', int $depth = 0)
 /**
  * @param array<mixed> $tree
  */
-function stylish(array $tree)
+function stylish(array $tree): string
 {
     return cb($tree);
 }

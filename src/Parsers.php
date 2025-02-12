@@ -4,7 +4,7 @@ namespace Gendiff\Parsers;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parse(string $data, string $format)
+function parse(string $data, string $format): mixed
 {
     switch ($format) {
         case 'json':
@@ -13,5 +13,7 @@ function parse(string $data, string $format)
             return(Yaml::parse($data));
         case 'yml':
             return(Yaml::parse($data));
+        default:
+            throw new \Exception("incorrect file extension: '{$format}!");
     }
 }

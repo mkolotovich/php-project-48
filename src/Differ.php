@@ -7,6 +7,9 @@ use function Gendiff\Parsers\parse;
 use function Gendiff\MakeTree\buildTree;
 use function Gendiff\Formatters\Index\formatData;
 
+/**
+* @return array<mixed>
+*/
 function getData(string $filePath): array
 {
     $data = readFile($filePath);

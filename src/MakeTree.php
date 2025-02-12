@@ -6,7 +6,7 @@ namespace Gendiff\MakeTree;
  * @param array<mixed> $file1
  * @param array<mixed> $file2
  */
-function isValueObject(string $node, array $file1, array $file2)
+function isValueObject(string $node, array $file1, array $file2): bool
 {
     if (array_key_exists($node, $file1) && array_key_exists($node, $file2)) {
         if (gettype($file1[$node]) === 'array' && gettype($file2[$node]) === 'array') {
@@ -15,7 +15,7 @@ function isValueObject(string $node, array $file1, array $file2)
     }
     return false;
 }
-function normalizeValue(mixed $value)
+function normalizeValue(mixed $value): mixed
 {
     if ($value  === false) {
         return 'false';
@@ -29,8 +29,9 @@ function normalizeValue(mixed $value)
 }
 /**
  * @param array<mixed> $children
+ * @return array<mixed>
  */
-function makeNode(string $key, string $type, array $children, mixed $value = null, mixed $newValue = null)
+function makeNode(string $key, string $type, array $children, mixed $value = null, mixed $newValue = null): array
 {
     if ($type !== 'nested' && $type !== 'root') {
         return [
@@ -50,8 +51,9 @@ function makeNode(string $key, string $type, array $children, mixed $value = nul
 /**
  * @param array<mixed> $parsedData1
  * @param array<mixed> $parsedData2
+ * @return array<mixed>
  */
-function buildNode(string $el, array $parsedData1, array $parsedData2)
+function buildNode(string $el, array $parsedData1, array $parsedData2): array
 {
     if (isValueObject($el, $parsedData1, $parsedData2)) {
         $subKeys1 = $parsedData1[$el];
@@ -82,16 +84,18 @@ function buildNode(string $el, array $parsedData1, array $parsedData2)
  * @param array<mixed> $keys
  * @param array<mixed> $parsedData1
  * @param array<mixed> $parsedData2
+ * @return array<mixed>
  */
-function makeTree(array $keys, array $parsedData1, array $parsedData2)
+function makeTree(array $keys, array $parsedData1, array $parsedData2): array
 {
     return array_map(fn($item) => buildNode($item, $parsedData1, $parsedData2), $keys);
 }
 /**
  * @param array<mixed> $parsedData1
  * @param array<mixed> $parsedData2
+ * @return array<mixed>
  */
-function buildTree(array $parsedData1, array $parsedData2)
+function buildTree(array $parsedData1, array $parsedData2): array
 {
     $keys1 = array_keys($parsedData1);
     $keys2 = array_keys($parsedData2);
