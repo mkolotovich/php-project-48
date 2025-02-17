@@ -28,59 +28,6 @@ function normalizeValue(mixed $value): mixed
     }
 }
 /**
- * @param array<mixed> $children
- * @return array<mixed>
- */
-function makeNode(string $key, string $type, array $children, mixed $value = null, mixed $newValue = null): array
-{
-    if ($type !== 'nested' && $type !== 'root') {
-        return [
-            "key" => $key,
-            "type" => $type,
-            "children" => $children,
-            "value" => normalizeValue($value),
-            "newValue" => normalizeValue($newValue)
-        ];
-    }
-    return [
-        "key" => $key,
-        "type" => $type,
-        "children" => $children,
-    ];
-}
-/**
- * @param array<mixed> $parsedData1
- * @param array<mixed> $parsedData2
- * @return array<mixed>
- */
-function buildNode(string $el, array $parsedData1, array $parsedData2): array
-{
-    if (isValueObject($el, $parsedData1, $parsedData2)) {
-        $subKeys1 = $parsedData1[$el];
-        $subKeys2 = $parsedData2[$el];
-        $keys1 = array_keys($subKeys1);
-        $keys2 = array_keys($subKeys2);
-        $innerKeys = array_merge($keys1, $keys2);
-        $uniqueKeys = array_unique($innerKeys);
-        $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
-        return makeNode($el, 'nested', makeTree($sortedKeys, $subKeys1, $subKeys2));
-    }
-    if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
-        if ($parsedData1[$el] === $parsedData2[$el]) {
-            return makeNode($el, 'unchanged', [], $parsedData2[$el]);
-        }
-    }
-    if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
-        if ($parsedData1[$el] !== $parsedData2[$el]) {
-            return makeNode($el, 'updated', [], $parsedData1[$el], $parsedData2[$el]);
-        }
-    }
-    if (array_key_exists($el, $parsedData1)) {
-        return makeNode($el, 'removed', [], $parsedData1[$el]);
-    }
-    return makeNode($el, 'added', [], $value = $parsedData2[$el]);
-}
-/**
  * @param array<mixed> $keys
  * @param array<mixed> $parsedData1
  * @param array<mixed> $parsedData2
@@ -88,7 +35,41 @@ function buildNode(string $el, array $parsedData1, array $parsedData2): array
  */
 function makeTree(array $keys, array $parsedData1, array $parsedData2): array
 {
-    return array_map(fn($item) => buildNode($item, $parsedData1, $parsedData2), $keys);
+    return array_map(function ($el) use ($parsedData1, $parsedData2) {
+        if (isValueObject($el, $parsedData1, $parsedData2)) {
+            $subKeys1 = $parsedData1[$el];
+            $subKeys2 = $parsedData2[$el];
+            $keys1 = array_keys($subKeys1);
+            $keys2 = array_keys($subKeys2);
+            $innerKeys = array_merge($keys1, $keys2);
+            $uniqueKeys = array_unique($innerKeys);
+            $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
+            return ["key" => $el, "type" => 'nested', "children" => makeTree($sortedKeys, $subKeys1, $subKeys2)];
+        }
+        if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
+            if ($parsedData1[$el] === $parsedData2[$el]) {
+                return [
+                    "key" => $el,
+                    "type" => 'unchanged',
+                    "children" => [],
+                    "value" => normalizeValue($parsedData2[$el])];
+            }
+        }
+        if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
+            if ($parsedData1[$el] !== $parsedData2[$el]) {
+                return [
+                    "key" => $el,
+                    "type" => 'updated',
+                    "children" => [],
+                    "value" => normalizeValue($parsedData1[$el]),
+                    "newValue" => normalizeValue($parsedData2[$el])];
+            }
+        }
+        if (array_key_exists($el, $parsedData1)) {
+            return ["key" => $el, "type" => 'removed', "children" => [], "value" => normalizeValue($parsedData1[$el])];
+        }
+        return ["key" => $el, "type" => 'added', "children" => [], "value" => normalizeValue($parsedData2[$el])];
+    }, $keys);
 }
 /**
  * @param array<mixed> $parsedData1
@@ -103,6 +84,6 @@ function buildTree(array $parsedData1, array $parsedData2): array
     $uniqueKeys = array_unique($keys);
     $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
     $res = makeTree($sortedKeys, $parsedData1, $parsedData2);
-    $tree = makeNode('', 'root', $res);
+    $tree = ["key" => '', "type" => 'root', "children" => $res];
     return $tree;
 }

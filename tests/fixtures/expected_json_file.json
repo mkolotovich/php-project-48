@@ -10,22 +10,19 @@
                     "key": "follow",
                     "type": "added",
                     "children": [],
-                    "value": "false",
-                    "newValue": "null"
+                    "value": "false"
                 },
                 {
                     "key": "setting1",
                     "type": "unchanged",
                     "children": [],
-                    "value": "Value 1",
-                    "newValue": "null"
+                    "value": "Value 1"
                 },
                 {
                     "key": "setting2",
                     "type": "removed",
                     "children": [],
-                    "value": 200,
-                    "newValue": "null"
+                    "value": 200
                 },
                 {
                     "key": "setting3",
@@ -38,8 +35,7 @@
                     "key": "setting4",
                     "type": "added",
                     "children": [],
-                    "value": "blah blah",
-                    "newValue": "null"
+                    "value": "blah blah"
                 },
                 {
                     "key": "setting5",
@@ -47,8 +43,7 @@
                     "children": [],
                     "value": {
                         "key5": "value5"
-                    },
-                    "newValue": "null"
+                    }
                 },
                 {
                     "key": "setting6",
@@ -71,15 +66,13 @@
                             "key": "key",
                             "type": "unchanged",
                             "children": [],
-                            "value": "value",
-                            "newValue": "null"
+                            "value": "value"
                         },
                         {
                             "key": "ops",
                             "type": "added",
                             "children": [],
-                            "value": "vops",
-                            "newValue": "null"
+                            "value": "vops"
                         }
                     ]
                 }
@@ -100,8 +93,7 @@
                     "key": "foo",
                     "type": "unchanged",
                     "children": [],
-                    "value": "bar",
-                    "newValue": "null"
+                    "value": "bar"
                 },
                 {
                     "key": "nest",
@@ -123,8 +115,7 @@
                 "deep": {
                     "id": 45
                 }
-            },
-            "newValue": "null"
+            }
         },
         {
             "key": "group3",
@@ -137,8 +128,7 @@
                     }
                 },
                 "fee": 100500
-            },
-            "newValue": "null"
+            }
         }
     ]
 }

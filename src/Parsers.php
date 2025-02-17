@@ -14,6 +14,6 @@ function parse(string $data, string $format): mixed
         case 'yml':
             return(Yaml::parse($data));
         default:
-            throw new \Exception("incorrect file extension: '{$format}!");
+            throw new \Exception("Incorrect input data! Needed json or yaml data.");
     }
 }
