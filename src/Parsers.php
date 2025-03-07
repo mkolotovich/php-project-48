@@ -20,7 +20,7 @@ function normalizeValue(mixed $value): mixed
             return $el;
         }
     }, $value);
-   return $normalizedValue;
+    return $normalizedValue;
 }
 
 function parse(string $data, string $format): mixed
