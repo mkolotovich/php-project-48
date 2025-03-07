@@ -10,38 +10,38 @@
                     "key": "follow",
                     "type": "added",
                     "children": [],
-                    "value": "false"
+                    "value1": "false"
                 },
                 {
                     "key": "setting1",
                     "type": "unchanged",
                     "children": [],
-                    "value": "Value 1"
+                    "value1": "Value 1"
                 },
                 {
                     "key": "setting2",
                     "type": "removed",
                     "children": [],
-                    "value": 200
+                    "value1": 200
                 },
                 {
                     "key": "setting3",
                     "type": "updated",
                     "children": [],
-                    "value": "true",
-                    "newValue": "null"
+                    "value1": "true",
+                    "value2": "null"
                 },
                 {
                     "key": "setting4",
                     "type": "added",
                     "children": [],
-                    "value": "blah blah"
+                    "value1": "blah blah"
                 },
                 {
                     "key": "setting5",
                     "type": "added",
                     "children": [],
-                    "value": {
+                    "value1": {
                         "key5": "value5"
                     }
                 },
@@ -57,8 +57,8 @@
                                     "key": "wow",
                                     "type": "updated",
                                     "children": [],
-                                    "value": "",
-                                    "newValue": "so much"
+                                    "value1": "",
+                                    "value2": "so much"
                                 }
                             ]
                         },
@@ -66,13 +66,13 @@
                             "key": "key",
                             "type": "unchanged",
                             "children": [],
-                            "value": "value"
+                            "value1": "value"
                         },
                         {
                             "key": "ops",
                             "type": "added",
                             "children": [],
-                            "value": "vops"
+                            "value1": "vops"
                         }
                     ]
                 }
@@ -86,23 +86,23 @@
                     "key": "baz",
                     "type": "updated",
                     "children": [],
-                    "value": "bas",
-                    "newValue": "bars"
+                    "value1": "bas",
+                    "value2": "bars"
                 },
                 {
                     "key": "foo",
                     "type": "unchanged",
                     "children": [],
-                    "value": "bar"
+                    "value1": "bar"
                 },
                 {
                     "key": "nest",
                     "type": "updated",
                     "children": [],
-                    "value": {
+                    "value1": {
                         "key": "value"
                     },
-                    "newValue": "str"
+                    "value2": "str"
                 }
             ]
         },
@@ -110,7 +110,7 @@
             "key": "group2",
             "type": "removed",
             "children": [],
-            "value": {
+            "value1": {
                 "abc": 12345,
                 "deep": {
                     "id": 45
@@ -121,7 +121,7 @@
             "key": "group3",
             "type": "added",
             "children": [],
-            "value": {
+            "value1": {
                 "deep": {
                     "id": {
                         "number": 45

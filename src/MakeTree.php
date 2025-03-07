@@ -15,18 +15,6 @@ function isValueObject(string $node, array $file1, array $file2): bool
     }
     return false;
 }
-function normalizeValue(mixed $value): mixed
-{
-    if ($value  === false) {
-        return 'false';
-    } elseif ($value === true) {
-        return 'true';
-    } elseif ($value === null) {
-        return 'null';
-    } else {
-        return $value;
-    }
-}
 /**
  * @param array<mixed> $keys
  * @param array<mixed> $parsedData1
@@ -52,7 +40,7 @@ function makeTree(array $keys, array $parsedData1, array $parsedData2): array
                     "key" => $el,
                     "type" => 'unchanged',
                     "children" => [],
-                    "value" => normalizeValue($parsedData2[$el])];
+                    "value1" => $parsedData2[$el]];
             }
         }
         if (array_key_exists($el, $parsedData1) && array_key_exists($el, $parsedData2)) {
@@ -61,14 +49,14 @@ function makeTree(array $keys, array $parsedData1, array $parsedData2): array
                     "key" => $el,
                     "type" => 'updated',
                     "children" => [],
-                    "value" => normalizeValue($parsedData1[$el]),
-                    "newValue" => normalizeValue($parsedData2[$el])];
+                    "value1" => $parsedData1[$el],
+                    "value2" => $parsedData2[$el]];
             }
         }
         if (array_key_exists($el, $parsedData1)) {
-            return ["key" => $el, "type" => 'removed', "children" => [], "value" => normalizeValue($parsedData1[$el])];
+            return ["key" => $el, "type" => 'removed', "children" => [], "value1" => $parsedData1[$el]];
         }
-        return ["key" => $el, "type" => 'added', "children" => [], "value" => normalizeValue($parsedData2[$el])];
+        return ["key" => $el, "type" => 'added', "children" => [], "value1" => $parsedData2[$el]];
     }, $keys);
 }
 /**

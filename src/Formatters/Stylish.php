@@ -55,10 +55,10 @@ function cb(array $data, string $result = '', int $depth = 0): string
     $key = $data['key'];
     $type = $data['type'];
     $children = $data['children'];
-    $printVal = array_key_exists("value", $data) ?
-        stringify($data['value'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
-    $printNewVal = array_key_exists("newValue", $data) ?
-        stringify($data['newValue'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
+    $printVal = array_key_exists("value1", $data) ?
+        stringify($data['value1'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
+    $printNewVal = array_key_exists("value2", $data) ?
+        stringify($data['value2'], ' ', ($depth + 1) * \Gendiff\Formatters\Stylish\DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
             $child = array_map(fn($item) => cb($item, mkStr($item, $depth + 1), $depth + 1), $children);

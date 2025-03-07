@@ -23,8 +23,8 @@ function cb(array $node, string $result = '', string $path = ''): string
     $key = $node['key'];
     $type = $node['type'];
     $children = $node['children'];
-    $printedValue = array_key_exists("value", $node) ? printValue($node['value']) : null;
-    $printedNewValue = array_key_exists("newValue", $node) ? printValue($node['newValue']) : null;
+    $printedValue = array_key_exists("value1", $node) ? printValue($node['value1']) : null;
+    $printedNewValue = array_key_exists("value2", $node) ? printValue($node['value2']) : null;
     $nodeName = substr("{$path}{$key}", 1);
     switch ($type) {
         case 'root':
