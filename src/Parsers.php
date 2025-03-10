@@ -20,7 +20,7 @@ function normalizeValue(mixed $value): mixed
             return $el;
         }
     }, $value);
-    return $normalizedValue;
+    return (object) $normalizedValue;
 }
 
 function parse(string $data, string $format): mixed
@@ -30,10 +30,10 @@ function parse(string $data, string $format): mixed
             $parcedData = json_decode($data, true);
             return normalizeValue($parcedData);
         case 'yaml':
-            $parcedData = Yaml::parse($data);
+            $parcedData = Yaml::parse($data, Yaml::PARSE_OBJECT);
             return normalizeValue($parcedData);
         case 'yml':
-            $parcedData = Yaml::parse($data);
+            $parcedData = Yaml::parse($data, Yaml::PARSE_OBJECT);
             return normalizeValue($parcedData);
         default:
             throw new \Exception("Incorrect input data! Needed json or yaml data.");

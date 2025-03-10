@@ -8,12 +8,12 @@ const DEPTHSTPACE = 4;
 /**
  * @param array<mixed> $currentValue
  */
-function callBack(array $currentValue, string $replaceInner, int $depth): string
+function callBack(object $currentValue, string $replaceInner, int $depth): string
 {
-    $entries = array_keys($currentValue);
+    $entries = array_keys((array) $currentValue);
     return array_reduce($entries, function ($acc, $key) use ($replaceInner, $depth, $currentValue) {
-        $val = $currentValue[$key];
-        if (gettype($val) !== 'array') {
+        $val = $currentValue->$key;
+        if (gettype($val) !== 'object') {
             $newAcc = str_repeat($replaceInner, $depth) . "{$key}: {$val}\n";
         } else {
             $newAcc = str_repeat($replaceInner, $depth) . "{$key}: "
@@ -26,7 +26,7 @@ function callBack(array $currentValue, string $replaceInner, int $depth): string
 
 function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1): mixed
 {
-    if (gettype($value) !== 'array') {
+    if (gettype($value) !== 'object') {
         return "{$value}";
     }
     $res = callBack($value, $replacer, $spaceCount)

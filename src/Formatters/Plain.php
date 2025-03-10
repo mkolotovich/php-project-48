@@ -4,7 +4,7 @@ namespace Gendiff\Formatters\Plain;
 
 function printValue(mixed $value): mixed
 {
-    if (gettype($value) === 'array') {
+    if (gettype($value) === 'object') {
         return '[complex value]';
     }
     if (gettype($value) === 'string') {
