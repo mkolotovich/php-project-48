@@ -2,10 +2,6 @@
 
 namespace Gendiff\MakeTree;
 
-/**
- * @param array<mixed> $file1
- * @param array<mixed> $file2
- */
 function isValueObject(string $node, object $file1, object $file2): bool
 {
     if (property_exists($file1, $node) && property_exists($file2, $node)) {
@@ -17,8 +13,6 @@ function isValueObject(string $node, object $file1, object $file2): bool
 }
 /**
  * @param array<mixed> $keys
- * @param array<mixed> $parsedData1
- * @param array<mixed> $parsedData2
  * @return array<mixed>
  */
 function makeTree(array $keys, object $parsedData1, object $parsedData2): array
@@ -60,8 +54,6 @@ function makeTree(array $keys, object $parsedData1, object $parsedData2): array
     }, $keys);
 }
 /**
- * @param array<mixed> $parsedData1
- * @param array<mixed> $parsedData2
  * @return array<mixed>
  */
 function buildTree(object $parsedData1, object $parsedData2): array

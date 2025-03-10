@@ -5,9 +5,6 @@ namespace Gendiff\Formatters\Stylish;
 const SPACE = 2;
 const DEPTHSTPACE = 4;
 
-/**
- * @param array<mixed> $currentValue
- */
 function callBack(object $currentValue, string $replaceInner, int $depth): string
 {
     $entries = array_keys((array) $currentValue);
