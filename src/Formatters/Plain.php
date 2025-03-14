@@ -6,19 +6,23 @@ function printValue(mixed $value): mixed
 {
     if (gettype($value) === 'object') {
         return '[complex value]';
-    }
-    if (gettype($value) === 'string') {
-        if ($value === 'false' || $value === 'true' || $value === 'null') {
-            return "{$value}";
+    } else {
+        if ($value === false) {
+            return 'false';
+        } elseif ($value === true) {
+            return 'true';
+        } elseif ($value === null) {
+            return 'null';
+        } else {
+            return "'{$value}'";
         }
-        return "'{$value}'";
     }
     return $value;
 }
 /**
  * @param array<mixed> $node
  */
-function cb(array $node, string $result = '', string $path = ''): string
+function iter(array $node, string $result = '', string $path = ''): string
 {
     $key = $node['key'];
     $type = $node['type'];
@@ -28,10 +32,10 @@ function cb(array $node, string $result = '', string $path = ''): string
     $nodeName = substr("{$path}{$key}", 1);
     switch ($type) {
         case 'root':
-            $child = array_map(fn($item) => cb($item, $result, "{$path}{$key}."), $children);
+            $child = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
             return implode("\n", $child);
         case 'nested':
-            $res = array_map(fn($item) => cb($item, $result, "{$path}{$key}."), $children);
+            $res = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
             $filtered = array_filter($res, fn($item) => $item !== '');
             return implode("\n", $filtered);
         case 'added':
@@ -40,8 +44,10 @@ function cb(array $node, string $result = '', string $path = ''): string
             return "{$result}Property '{$nodeName}' was removed";
         case 'updated':
             return "{$result}Property '{$nodeName}' was updated. From {$printedValue} to {$printedNewValue}";
-        default:
+        case 'unchanged':
             return '';
+        default:
+            throw new \Exception("Incorrect node type!");
     }
 }
 /**
@@ -49,5 +55,5 @@ function cb(array $node, string $result = '', string $path = ''): string
  */
 function plain(array $tree): string
 {
-    return cb($tree);
+    return iter($tree);
 }

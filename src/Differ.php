@@ -4,7 +4,7 @@ namespace Differ\Differ;
 
 use function Gendiff\ReadFile\readFile;
 use function Gendiff\Parsers\parse;
-use function Gendiff\MakeTree\buildTree;
+use function Gendiff\MakeTree\makeTree;
 use function Gendiff\Formatters\Index\formatData;
 
 /**
@@ -23,6 +23,6 @@ function genDiff(string $filePath1, string $filePath2, string $formatName = 'sty
     [$file2, $ext2] = getData($filePath2);
     $parsedData1 = parse($file1, $ext1);
     $parsedData2 = parse($file2, $ext2);
-    $tree = buildTree($parsedData1, $parsedData2);
+    $tree = ["key" => '', "type" => 'root', "children" => makeTree($parsedData1, $parsedData2)];
     return formatData($formatName, $tree);
 }

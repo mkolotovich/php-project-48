@@ -12,14 +12,10 @@ use function Gendiff\Formatters\Json\jsonFormatter;
 
 function formatData(string $formatName, array $structure): mixed
 {
-    if ($formatName === 'plain') {
-        return plain($structure);
-    }
-    if ($formatName === 'json') {
-        return jsonFormatter($structure);
-    }
-    if ($formatName == 'stylish') {
-        return stylish($structure);
-    }
-    throw new \Exception("incorrect format: '{$formatName}!");
+    return match ($formatName) {
+        'plain' => plain($structure),
+        'json' => jsonFormatter($structure),
+        'stylish' => stylish($structure),
+        default => throw new \Exception("incorrect format: '{$formatName}!"),
+    };
 }

@@ -10,7 +10,7 @@
                     "key": "follow",
                     "type": "added",
                     "children": [],
-                    "value1": "false"
+                    "value1": false
                 },
                 {
                     "key": "setting1",
@@ -28,8 +28,8 @@
                     "key": "setting3",
                     "type": "updated",
                     "children": [],
-                    "value1": "true",
-                    "value2": "null"
+                    "value1": true,
+                    "value2": null
                 },
                 {
                     "key": "setting4",
