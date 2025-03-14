@@ -13,11 +13,12 @@ function printValue(mixed $value): mixed
             return 'true';
         } elseif ($value === null) {
             return 'null';
-        } else {
+        } elseif (gettype($value) === 'string') {
             return "'{$value}'";
+        } else {
+            return "{$value}";
         }
     }
-    return $value;
 }
 /**
  * @param array<mixed> $node
