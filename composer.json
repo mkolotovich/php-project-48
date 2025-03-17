@@ -29,6 +29,13 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.0",
         "phpunit/phpunit": "^11.5",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^1.10.24",
+        "phpstan/extension-installer": "^1.4",
+        "hexlet/phpstan-fp": "2.0.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     }
 }

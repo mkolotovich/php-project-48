@@ -68,14 +68,14 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     switch ($type) {
         case 'root':
             $child = array_map(fn($item) => stylishIter($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $children = implode("\n", $child);
+            $childToStr = implode("\n", $child);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$children}\n{$indent}}";
+            return "{\n{$result}{$childToStr}\n{$indent}}";
         case 'nested':
             $child = array_map(fn($item) => stylishIter($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $children = implode("\n", $child);
+            $childToStr = implode("\n", $child);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$children}\n{$indent}}";
+            return "{$result}{$childToStr}\n{$indent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));

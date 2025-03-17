@@ -15,3 +15,6 @@ parameters:
    - '#has no return type specified#'
    - '#should return .* but returns#'
    - '#Anonymous function should have native return type#'
+
+  phpstanFunctionalProgramming:
+    disallowThrow: false

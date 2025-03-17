@@ -20,7 +20,7 @@ function makeTree(object $parsedData1, object $parsedData2): array
     $keys2 = array_keys((array) $parsedData2);
     $keys = array_merge($keys1, $keys2);
     $uniqueKeys = array_unique($keys);
-    $keys = collect($uniqueKeys)->sort()->values()->all();
+    $sortedKeys = collect($uniqueKeys)->sort()->values()->all();
     return array_map(function ($key) use ($parsedData1, $parsedData2) {
         if (isValueObject($key, $parsedData1, $parsedData2)) {
             $subKeys1 = $parsedData1->$key;
@@ -52,5 +52,5 @@ function makeTree(object $parsedData1, object $parsedData2): array
             return ["key" => $key, "type" => 'removed', "children" => [], "value1" => $parsedData1->$key];
         }
         return ["key" => $key, "type" => 'added', "children" => [], "value1" => $parsedData2->$key];
-    }, $keys);
+    }, $sortedKeys);
 }
