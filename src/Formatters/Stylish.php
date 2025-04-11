@@ -5,11 +5,11 @@ namespace Gendiff\Formatters\Stylish;
 const SPACE = 2;
 const DEPTHSTPACE = 4;
 
-function stringifyIter(object $currentValue, string $replaceInner, int $depth): string
+function stringifyIter(object $node, string $replaceInner, int $depth): string
 {
-    $entries = array_keys((array) $currentValue);
-    return array_reduce($entries, function ($acc, $key) use ($replaceInner, $depth, $currentValue) {
-        $val = $currentValue->$key;
+    $entries = array_keys((array) $node);
+    return array_reduce($entries, function ($acc, $key) use ($replaceInner, $depth, $node) {
+        $val = $node->$key;
         if (gettype($val) !== 'object') {
             $indent = str_repeat($replaceInner, $depth);
             $newAcc =  "{$indent}{$key}: {$val}\n";
@@ -19,22 +19,24 @@ function stringifyIter(object $currentValue, string $replaceInner, int $depth): 
             $endIndent = str_repeat($replaceInner, $depth);
             $newAcc = "{$beginIndent}{$key}: {$value}{$endIndent}}\n";
         }
-        return $acc . $newAcc;
+        return "{$acc}{$newAcc}";
     }, "{\n");
 }
 
 function stringify(mixed $value, string $replacer = ' ', int $spaceCount = 1): mixed
 {
-    if (gettype($value) !== 'object') {
+    if (gettype($value) === 'boolean') {
         if ($value === false) {
             return 'false';
-        } elseif ($value === true) {
-            return 'true';
-        } elseif ($value === null) {
-            return 'null';
         } else {
-            return "{$value}";
+            return 'true';
         }
+    }
+    if (gettype($value) === 'NULL') {
+        return 'null';
+    }
+    if (gettype($value) !== 'object') {
+        return "{$value}";
     }
     $keyValue = stringifyIter($value, $replacer, $spaceCount);
     $indent = str_repeat(' ', $spaceCount - DEPTHSTPACE);
@@ -47,7 +49,7 @@ function makeIndent(int $depth): int
 /**
  * @param array<mixed> $item
  */
-function mkStr(array $item, int $depth): string
+function makeAccum(array $item, int $depth): string
 {
     if ($item["type"] == 'nested') {
         $indent = str_repeat(' ', makeIndent($depth));
@@ -67,15 +69,15 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     $value2 = array_key_exists("value2", $data) ? stringify($data['value2'], ' ', ($depth + 1) * DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
-            $child = array_map(fn($item) => stylishIter($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $childToStr = implode("\n", $child);
+            $children = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
+            $childrenToStr = implode("\n", $children);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$childToStr}\n{$indent}}";
+            return "{\n{$result}{$childrenToStr}\n{$indent}}";
         case 'nested':
-            $child = array_map(fn($item) => stylishIter($item, mkStr($item, $depth + 1), $depth + 1), $children);
-            $childToStr = implode("\n", $child);
+            $children = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
+            $childrenToStr = implode("\n", $children);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$childToStr}\n{$indent}}";
+            return "{$result}{$childrenToStr}\n{$indent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));

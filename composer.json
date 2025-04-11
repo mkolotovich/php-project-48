@@ -7,7 +7,6 @@
     "autoload": {
         "files": [
             "src/Differ.php",
-            "src/ReadFile.php",
             "src/Parsers.php",
             "src/MakeTree.php",
             "src/Formatters.php",

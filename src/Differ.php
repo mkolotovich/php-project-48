@@ -2,7 +2,6 @@
 
 namespace Differ\Differ;
 
-use function Gendiff\ReadFile\readFile;
 use function Gendiff\Parsers\parse;
 use function Gendiff\MakeTree\makeTree;
 use function Gendiff\Formatters\Index\formatData;
@@ -12,7 +11,7 @@ use function Gendiff\Formatters\Index\formatData;
 */
 function getData(string $filePath): array
 {
-    $data = readFile($filePath);
+    $data = file_get_contents($filePath);
     $format = new \SplFileInfo($filePath);
     return [$data, $format->getExtension()];
 }
