@@ -8,5 +8,5 @@ namespace Gendiff\Formatters\Json;
 
 function jsonFormatter(array $data): string
 {
-    return json_encode($data, JSON_PRETTY_PRINT);
+    return json_encode($data, JSON_PRETTY_PRINT) ? : "";
 }
