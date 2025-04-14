@@ -51,7 +51,7 @@ function makeIndent(int $depth): int
  */
 function makeAccum(array $item, int $depth): string
 {
-    if ($item["type"] == 'nested') {
+    if ($item["type"] === 'nested') {
         $indent = str_repeat(' ', makeIndent($depth));
         return "{$indent}  {$item["key"]}: {\n";
     }
@@ -69,15 +69,15 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     $value2 = array_key_exists("value2", $data) ? stringify($data['value2'], ' ', ($depth + 1) * DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
-            $children = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
-            $childrenToStr = implode("\n", $children);
+            $res = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
+            $resToStr = implode("\n", $res);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$childrenToStr}\n{$indent}}";
+            return "{\n{$result}{$resToStr}\n{$indent}}";
         case 'nested':
-            $children = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
-            $childrenToStr = implode("\n", $children);
+            $res = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
+            $resToStr = implode("\n", $res);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$childrenToStr}\n{$indent}}";
+            return "{$result}{$resToStr}\n{$indent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));

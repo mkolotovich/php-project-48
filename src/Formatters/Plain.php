@@ -25,17 +25,13 @@ function iter(array $node, string $result = '', string $path = ''): string
     $key = $node['key'];
     $type = $node['type'];
     $children = $node['children'];
-    if ($type === 'added' || $type === 'updated') {
-        $printedValue1 = printValue($node['value1']);
-    }
-    if ($type === 'updated') {
-        $printedValue2 = printValue($node['value2']);
-    }
+    $printedValue1 = $type === 'added' || $type === 'updated' ? printValue($node['value1']) : null;
+    $printedValue2 = $type === 'updated' ? printValue($node['value2']) : null;
     $nodeName = substr("{$path}{$key}", 1);
     switch ($type) {
         case 'root':
-            $children = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
-            return implode("\n", $children);
+            $res = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
+            return implode("\n", $res);
         case 'nested':
             $res = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
             $filtered = array_filter($res, fn($item) => $item !== '');
