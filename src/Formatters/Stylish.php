@@ -15,9 +15,9 @@ function stringifyIter(object $node, string $replaceInner, int $depth): string
             $newAcc =  "{$indent}{$key}: {$val}\n";
         } else {
             $beginIndent = str_repeat($replaceInner, $depth);
-            $value = stringifyIter($val, $replaceInner, $depth + DEPTHSTPACE);
+            $valToStr = stringifyIter($val, $replaceInner, $depth + DEPTHSTPACE);
             $endIndent = str_repeat($replaceInner, $depth);
-            $newAcc = "{$beginIndent}{$key}: {$value}{$endIndent}}\n";
+            $newAcc = "{$beginIndent}{$key}: {$valToStr}{$endIndent}}\n";
         }
         return "{$acc}{$newAcc}";
     }, "{\n");
@@ -47,17 +47,6 @@ function makeIndent(int $depth): int
     return DEPTHSTPACE * ($depth - 1) + SPACE;
 }
 /**
- * @param array<mixed> $item
- */
-function makeAccum(array $item, int $depth): string
-{
-    if ($item["type"] === 'nested') {
-        $indent = str_repeat(' ', makeIndent($depth));
-        return "{$indent}  {$item["key"]}: {\n";
-    }
-    return '';
-}
-/**
  * @param array<mixed> $data
  */
 function stylishIter(array $data, string $result = '', int $depth = 0): string
@@ -69,15 +58,25 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     $value2 = array_key_exists("value2", $data) ? stringify($data['value2'], ' ', ($depth + 1) * DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
-            $res = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
-            $resToStr = implode("\n", $res);
+            $indent = str_repeat(' ', makeIndent($depth + 1));
+            $nodes = array_map(fn($item) => stylishIter(
+                $item,
+                $item["type"] === 'nested' ? "{$indent}  {$item["key"]}: {\n" : "",
+                $depth + 1
+            ), $children);
+            $nodesToStr = implode("\n", $nodes);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$resToStr}\n{$indent}}";
+            return "{\n{$result}{$nodesToStr}\n{$indent}}";
         case 'nested':
-            $res = array_map(fn($item) => stylishIter($item, makeAccum($item, $depth + 1), $depth + 1), $children);
-            $resToStr = implode("\n", $res);
+            $indent = str_repeat(' ', makeIndent($depth + 1));
+            $nodes = array_map(fn($item) => stylishIter(
+                $item,
+                $item["type"] === 'nested' ? "{$indent}  {$item["key"]}: {\n" : "",
+                $depth + 1
+            ), $children);
+            $nodesToStr = implode("\n", $nodes);
             $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$resToStr}\n{$indent}}";
+            return "{$result}{$nodesToStr}\n{$indent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));
@@ -88,15 +87,17 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
         case 'removed':
             $indent = str_repeat(' ', makeIndent($depth));
             return "{$result}{$indent}- {$key}: {$value1}";
-        default:
+        case 'unchanged':
             $indent = str_repeat(' ', makeIndent($depth));
             return "{$result}{$indent}  {$key}: {$value1}";
+        default:
+            throw new \Exception("Incorrect node type!");
     }
 }
 /**
  * @param array<mixed> $tree
  */
-function stylish(array $tree): string
+function formatToStylish(array $tree): string
 {
     return stylishIter($tree);
 }

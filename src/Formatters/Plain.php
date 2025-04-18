@@ -25,22 +25,23 @@ function iter(array $node, string $result = '', string $path = ''): string
     $key = $node['key'];
     $type = $node['type'];
     $children = $node['children'];
-    $printedValue1 = $type === 'added' || $type === 'updated' ? printValue($node['value1']) : null;
-    $printedValue2 = $type === 'updated' ? printValue($node['value2']) : null;
     $nodeName = substr("{$path}{$key}", 1);
     switch ($type) {
         case 'root':
-            $res = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
-            return implode("\n", $res);
+            $nodes = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
+            return implode("\n", $nodes);
         case 'nested':
-            $res = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
-            $filtered = array_filter($res, fn($item) => $item !== '');
-            return implode("\n", $filtered);
+            $nodes = array_map(fn($item) => iter($item, $result, "{$path}{$key}."), $children);
+            $filteredNodes = array_filter($nodes, fn($item) => $item !== '');
+            return implode("\n", $filteredNodes);
         case 'added':
+            $printedValue1 = printValue($node['value1']);
             return "{$result}Property '{$nodeName}' was added with value: {$printedValue1}";
         case 'removed':
             return "{$result}Property '{$nodeName}' was removed";
         case 'updated':
+            $printedValue1 = printValue($node['value1']);
+            $printedValue2 = printValue($node['value2']);
             return "{$result}Property '{$nodeName}' was updated. From {$printedValue1} to {$printedValue2}";
         case 'unchanged':
             return '';
@@ -51,7 +52,7 @@ function iter(array $node, string $result = '', string $path = ''): string
 /**
  * @param array<mixed> $tree
  */
-function plain(array $tree): string
+function formatToPlain(array $tree): string
 {
     return iter($tree);
 }

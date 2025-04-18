@@ -2,9 +2,9 @@
 
 namespace Gendiff\Formatters\Index;
 
-use function Gendiff\Formatters\Stylish\stylish;
-use function Gendiff\Formatters\Plain\plain;
-use function Gendiff\Formatters\Json\jsonFormatter;
+use function Gendiff\Formatters\Stylish\formatToStylish;
+use function Gendiff\Formatters\Plain\formatToPlain;
+use function Gendiff\Formatters\Json\formatToJson;
 
 /**
  * @param array<mixed> $structure
@@ -13,9 +13,9 @@ use function Gendiff\Formatters\Json\jsonFormatter;
 function formatData(string $formatName, array $structure): mixed
 {
     return match ($formatName) {
-        'plain' => plain($structure),
-        'json' => jsonFormatter($structure),
-        'stylish' => stylish($structure),
+        'plain' => formatToPlain($structure),
+        'json' => formatToJson($structure),
+        'stylish' => formatToStylish($structure),
         default => throw new \Exception("incorrect format: '{$formatName}!"),
     };
 }
