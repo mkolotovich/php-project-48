@@ -58,25 +58,25 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     $value2 = array_key_exists("value2", $data) ? stringify($data['value2'], ' ', ($depth + 1) * DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
-            $indent = str_repeat(' ', makeIndent($depth + 1));
+            $beginIndent = str_repeat(' ', makeIndent($depth + 1));
             $nodes = array_map(fn($item) => stylishIter(
                 $item,
-                $item["type"] === 'nested' ? "{$indent}  {$item["key"]}: {\n" : "",
+                $item["type"] === 'nested' ? "{$beginIndent}  {$item["key"]}: {\n" : "",
                 $depth + 1
             ), $children);
             $nodesToStr = implode("\n", $nodes);
-            $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$nodesToStr}\n{$indent}}";
+            $endIndent = str_repeat(' ', SPACE * $depth * SPACE);
+            return "{\n{$result}{$nodesToStr}\n{$endIndent}}";
         case 'nested':
-            $indent = str_repeat(' ', makeIndent($depth + 1));
+            $beginIndent = str_repeat(' ', makeIndent($depth + 1));
             $nodes = array_map(fn($item) => stylishIter(
                 $item,
-                $item["type"] === 'nested' ? "{$indent}  {$item["key"]}: {\n" : "",
+                $item["type"] === 'nested' ? "{$beginIndent}  {$item["key"]}: {\n" : "",
                 $depth + 1
             ), $children);
             $nodesToStr = implode("\n", $nodes);
-            $indent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$nodesToStr}\n{$indent}}";
+            $endIndent = str_repeat(' ', SPACE * $depth * SPACE);
+            return "{$result}{$nodesToStr}\n{$endIndent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));
