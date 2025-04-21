@@ -58,25 +58,16 @@ function stylishIter(array $data, string $result = '', int $depth = 0): string
     $value2 = array_key_exists("value2", $data) ? stringify($data['value2'], ' ', ($depth + 1) * DEPTHSTPACE) : null;
     switch ($type) {
         case 'root':
-            $beginIndent = str_repeat(' ', makeIndent($depth + 1));
-            $nodes = array_map(fn($item) => stylishIter(
-                $item,
-                $item["type"] === 'nested' ? "{$beginIndent}  {$item["key"]}: {\n" : "",
-                $depth + 1
-            ), $children);
-            $nodesToStr = implode("\n", $nodes);
+            $nodes = implode("\n", array_map(fn($item) => stylishIter($item, "", $depth + 1), $children));
             $endIndent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{\n{$result}{$nodesToStr}\n{$endIndent}}";
+            return "{\n{$result}{$nodes}\n{$endIndent}}";
         case 'nested':
+            $startIndent = str_repeat(' ', makeIndent($depth));
             $beginIndent = str_repeat(' ', makeIndent($depth + 1));
-            $nodes = array_map(fn($item) => stylishIter(
-                $item,
-                $item["type"] === 'nested' ? "{$beginIndent}  {$item["key"]}: {\n" : "",
-                $depth + 1
-            ), $children);
+            $nodes = array_map(fn($item) => stylishIter($item, "", $depth + 1), $children);
             $nodesToStr = implode("\n", $nodes);
             $endIndent = str_repeat(' ', SPACE * $depth * SPACE);
-            return "{$result}{$nodesToStr}\n{$endIndent}}";
+            return "{$startIndent}  {$data["key"]}: {\n{$result}{$nodesToStr}\n{$endIndent}}";
         case 'updated':
             $beginIndent = str_repeat(' ', makeIndent($depth));
             $endIndent = str_repeat(' ', makeIndent($depth));
